@@ -1,0 +1,26 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4']
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup PHP
+      uses: shivammathur/setup-php@1.4.6
+      with:
+        php-version: ${{ matrix.php-versions }}
+        # NOTE: phpmd ^2.7 requires ext-xml on PHP 7.4
+        # NOTE: phpunit ^8.4 requires ext-dom and ext-mbstring on PHP 7.4
+        extension-csv: xml, dom, mbstring
+    - name: PHP version
+      run: php -v
+    - name: Composer version
+      run: composer -V
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Run check
+      run: composer check
