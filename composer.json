@@ -12,7 +12,9 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.2"
+        "php": ">=7.2",
+        "doctrine/annotations": "^1.8",
+        "symfony/routing": "^4.3"
     },
     "require-dev": {
         "phpmd/phpmd": "^2.7",
@@ -23,11 +25,12 @@
     "autoload": {
         "psr-4": {
             "K9u\\Router\\": "src/"
-        }
+        },
+        "files": ["annotation_loader.php"]
     },
     "autoload-dev": {
         "psr-4": {
-            "K9u\\Router\\": "tests/"
+            "K9u\\Router\\": ["tests/","tests/Fixtures/"]
         }
     },
     "scripts": {
