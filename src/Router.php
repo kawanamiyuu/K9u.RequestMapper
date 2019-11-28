@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
+use K9u\Router\Exception\HandlerNotFoundException;
+use K9u\Router\Exception\MethodNotAllowedException;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException as MethodNotAllowed;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException as HandlerNotFound;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
@@ -28,7 +32,13 @@ class Router
         $context = new RequestContext('/', $method);
         $matcher = new UrlMatcher(($this->collector)(), $context);
 
-        $matched = $matcher->match($path);
+        try {
+            $matched = $matcher->match($path);
+        } catch (HandlerNotFound $e) {
+            throw new HandlerNotFoundException($method, $path, $e);
+        } catch (MethodNotAllowed $e) {
+            throw new MethodNotAllowedException($method, $path, $e);
+        }
 
         return new Handler(
             $matched['_handler_class'],
