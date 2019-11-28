@@ -6,7 +6,7 @@ namespace K9u\Router\Annotation;
 
 use Symfony\Component\Routing\Annotation\Route;
 
-abstract class AbstractRoute
+abstract class AbstractMapping
 {
     /**
      * @var Route

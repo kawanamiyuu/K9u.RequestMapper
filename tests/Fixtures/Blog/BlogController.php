@@ -6,13 +6,13 @@ namespace K9u\Router\Blog;
 
 use K9u\Router\Annotation\DeleteMapping;
 use K9u\Router\Annotation\GetMapping;
-use K9u\Router\Annotation\Handler;
+use K9u\Router\Annotation\RequestMapping;
 use K9u\Router\Annotation\PatchMapping;
 use K9u\Router\Annotation\PostMapping;
 use K9u\Router\Annotation\PutMapping;
 
 /**
- * @Handler("/blogs")
+ * @RequestMapping("/blogs")
  */
 class BlogController
 {

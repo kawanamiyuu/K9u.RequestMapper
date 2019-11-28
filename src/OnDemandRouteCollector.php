@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Loader\AnnotationClassLoader;
 use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use K9u\Router\Annotation\AbstractRoute;
+use K9u\Router\Annotation\AbstractMapping;
 
 final class OnDemandRouteCollector implements RouteCollectorInterface
 {
@@ -41,7 +41,8 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
                 ReflectionMethod $method,
                 $annotation
             ) {
-                assert($annotation instanceof AbstractRoute);
+                assert(count($route->getMethods()) === 1);
+                assert($annotation instanceof AbstractMapping);
 
                 $route->setDefaults([
                     '_handler_class' => $class->getName(),
@@ -50,7 +51,7 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
             }
         };
 
-        $classLoader->setRouteAnnotationClass(AbstractRoute::class);
+        $classLoader->setRouteAnnotationClass(AbstractMapping::class);
 
         $directoryLoader = new AnnotationDirectoryLoader(new FileLocator(), $classLoader);
 

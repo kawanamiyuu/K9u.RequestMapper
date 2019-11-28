@@ -8,7 +8,7 @@ namespace K9u\Router\Annotation;
  * @Annotation
  * @Target("CLASS")
  */
-final class Handler extends AbstractRoute
+final class RequestMapping extends AbstractMapping
 {
     public function __construct(array $data)
     {

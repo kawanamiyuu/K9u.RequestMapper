@@ -6,9 +6,9 @@ namespace K9u\Router\Annotation;
 
 /**
  * @Annotation
- * @Target("METHOD")
+ * @Target({"CLASS", "METHOD"})
  */
-final class DeleteMapping extends AbstractRoute
+final class DeleteMapping extends AbstractMapping
 {
     public function __construct(array $data)
     {

@@ -6,9 +6,9 @@ namespace K9u\Router\Annotation;
 
 /**
  * @Annotation
- * @Target("METHOD")
+ * @Target({"CLASS", "METHOD"})
  */
-final class PostMapping extends AbstractRoute
+final class PostMapping extends AbstractMapping
 {
     public function __construct(array $data)
     {
