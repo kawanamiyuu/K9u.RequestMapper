@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
+use K9u\Router\Author\AuthorController;
+use K9u\Router\Blog\BlogController;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 
@@ -47,63 +49,63 @@ class OnDemandRouteCollectorTest extends TestCase
             [
                 '/authors',
                 ['GET'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'index']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'index']
             ],
             [
                 '/authors/{id}',
                 ['GET'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'get']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'get']
             ],
             [
                 '/authors',
                 ['POST'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'post']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'post']
             ],
             [
                 '/authors/{id}',
                 ['PUT'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'put']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'put']
             ],
             [
                 '/authors/{id}',
                 ['PATCH'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'patch']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'patch']
             ],
             [
                 '/authors/{id}',
                 ['DELETE'],
-                ['_handler_class' => 'K9u\Router\Author\AuthorController', '_handler_method' => 'delete']
+                ['_handler_class' => AuthorController::class, '_handler_method' => 'delete']
             ],
             // blog
             [
                 '/blogs',
                 ['GET'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'index']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'index']
             ],
             [
                 '/blogs/{id}',
                 ['GET'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'get']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'get']
             ],
             [
                 '/blogs',
                 ['POST'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'post']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'post']
             ],
             [
                 '/blogs/{id}',
                 ['PUT'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'put']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'put']
             ],
             [
                 '/blogs/{id}',
                 ['PATCH'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'patch']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'patch']
             ],
             [
                 '/blogs/{id}',
                 ['DELETE'],
-                ['_handler_class' => 'K9u\Router\Blog\BlogController', '_handler_method' => 'delete']
+                ['_handler_class' => BlogController::class, '_handler_method' => 'delete']
             ],
         ];
 
