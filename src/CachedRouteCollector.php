@@ -11,6 +11,6 @@ final class CachedRouteCollector implements RouteCollectorInterface
     public function __invoke(): RouteCollection
     {
         // TODO: Implement __invoke() method.
-        return null;
+        return new RouteCollection();
     }
 }
