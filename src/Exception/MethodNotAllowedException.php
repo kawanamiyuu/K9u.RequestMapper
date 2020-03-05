@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace K9u\Router\Exception;
 
+use RuntimeException;
 use Throwable;
 
-final class MethodNotAllowedException extends \RuntimeException implements ExceptionInterface
+final class MethodNotAllowedException extends RuntimeException implements ExceptionInterface
 {
     public function __construct(string $method, string $path, Throwable $previous = null)
     {
