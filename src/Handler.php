@@ -6,20 +6,14 @@ namespace K9u\Router;
 
 final class Handler
 {
-    /**
-     * @var string
-     */
-    public $class;
+    public string $class;
 
-    /**
-     * @var string
-     */
-    public $method;
+    public string $method;
 
     /**
      * @var array<string, string>
      */
-    public $variables;
+    public array $variables;
 
     /**
      * @param string                $class

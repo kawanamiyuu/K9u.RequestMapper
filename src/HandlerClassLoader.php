@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
+use Doctrine\Common\Annotations\AnnotationReader;
 use K9u\Router\Annotation\AbstractMapping;
 use ReflectionClass;
 use ReflectionMethod;
@@ -16,10 +17,12 @@ class HandlerClassLoader extends AnnotationClassLoader
 
     public const HANDLER_METHOD_KEY = '_handler_method';
 
-    /**
-     * @var class-string
-     */
-    protected $routeAnnotationClass = AbstractMapping::class;
+    public function __construct()
+    {
+        parent::__construct(new AnnotationReader());
+
+        $this->setRouteAnnotationClass(AbstractMapping::class);
+    }
 
     /**
      * @param Route                   $route

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use LogicException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -13,15 +12,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 final class OnDemandRouteCollector implements RouteCollectorInterface
 {
-    /**
-     * @var string
-     */
-    private $baseDir;
+    private string $baseDir;
 
-    /**
-     * @var LoaderInterface
-     */
-    private $directoryLoader;
+    private LoaderInterface $directoryLoader;
 
     public function __construct(string $baseDir)
     {
@@ -33,7 +26,7 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
 
         $this->directoryLoader = new AnnotationDirectoryLoader(
             new FileLocator(),
-            new HandlerClassLoader(new AnnotationReader())
+            new HandlerClassLoader()
         );
     }
 

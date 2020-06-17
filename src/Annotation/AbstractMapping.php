@@ -8,10 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 abstract class AbstractMapping
 {
-    /**
-     * @var Route
-     */
-    private $delegate;
+    private Route $delegate;
 
     protected function __construct(string $path, ?string $method)
     {

@@ -15,15 +15,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 class Router
 {
-    /**
-     * @var RouteCollectorInterface
-     */
-    private $collector;
+    private RouteCollectorInterface $collector;
 
-    /**
-     * @var RouteCollection
-     */
-    private $routeCollection;
+    private RouteCollection $routeCollection;
 
     public function __construct(RouteCollectorInterface $collector)
     {
