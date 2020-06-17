@@ -15,15 +15,9 @@ use Symfony\Component\Routing\RouteCollection;
 
 class Router
 {
-    /**
-     * @var RouteCollectorInterface
-     */
-    private $collector;
+    private RouteCollectorInterface $collector;
 
-    /**
-     * @var RouteCollection
-     */
-    private $routeCollection;
+    private RouteCollection $routeCollection;
 
     public function __construct(RouteCollectorInterface $collector)
     {
@@ -47,12 +41,17 @@ class Router
         }
 
         return new Handler(
-            $matched['_handler_class'],
-            $matched['_handler_method'],
+            $matched[HandlerClassLoader::HANDLER_CLASS_KEY],
+            $matched[HandlerClassLoader::HANDLER_METHOD_KEY],
             $this->extractVariables($matched)
         );
     }
 
+    /**
+     * @param array<string, string> $matched
+     *
+     * @return array<string, string>
+     */
     private function extractVariables(array $matched): array
     {
         return array_filter($matched, function ($key) {
@@ -62,7 +61,7 @@ class Router
 
     private function getRouteCollection(): RouteCollection
     {
-        if ($this->routeCollection) {
+        if (isset($this->routeCollection)) {
             return $this->routeCollection;
         }
 

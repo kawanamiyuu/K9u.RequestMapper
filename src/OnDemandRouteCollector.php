@@ -4,23 +4,17 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use LogicException;
-use ReflectionClass;
-use ReflectionMethod;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Routing\Loader\AnnotationClassLoader;
+use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
-use K9u\Router\Annotation\AbstractMapping;
 
 final class OnDemandRouteCollector implements RouteCollectorInterface
 {
-    /**
-     * @var string
-     */
-    private $baseDir;
+    private string $baseDir;
+
+    private LoaderInterface $directoryLoader;
 
     public function __construct(string $baseDir)
     {
@@ -29,32 +23,15 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
         }
 
         $this->baseDir = $baseDir;
+
+        $this->directoryLoader = new AnnotationDirectoryLoader(
+            new FileLocator(),
+            new HandlerClassLoader()
+        );
     }
 
     public function __invoke(): RouteCollection
     {
-        $classLoader = new class (new AnnotationReader()) extends AnnotationClassLoader {
-
-            protected function configureRoute(
-                Route $route,
-                ReflectionClass $class,
-                ReflectionMethod $method,
-                $annotation
-            ) {
-                assert(count($route->getMethods()) === 1);
-                assert($annotation instanceof AbstractMapping);
-
-                $route->setDefaults([
-                    '_handler_class' => $class->getName(),
-                    '_handler_method' => $method->getName()
-                ]);
-            }
-        };
-
-        $classLoader->setRouteAnnotationClass(AbstractMapping::class);
-
-        $directoryLoader = new AnnotationDirectoryLoader(new FileLocator(), $classLoader);
-
-        return $directoryLoader->load($this->baseDir);
+        return $this->directoryLoader->load($this->baseDir);
     }
 }

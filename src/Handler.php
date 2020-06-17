@@ -6,21 +6,20 @@ namespace K9u\Router;
 
 final class Handler
 {
-    /**
-     * @var string
-     */
-    public $class;
+    public string $class;
+
+    public string $method;
 
     /**
-     * @var string
+     * @var array<string, string>
      */
-    public $method;
+    public array $variables;
 
     /**
-     * @var array
+     * @param string                $class
+     * @param string                $method
+     * @param array<string, string> $variables
      */
-    public $variables;
-
     public function __construct(string $class, string $method, array $variables)
     {
         $this->class = $class;
