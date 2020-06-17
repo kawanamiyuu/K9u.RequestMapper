@@ -47,13 +47,13 @@ class RouterTest extends TestCase
 
     private function createRequest(string $method, string $path): ServerRequestInterface
     {
-        $uri = $this->prophesize(UriInterface::class);
-        $uri->getPath()->willReturn($path);
+        $uri = $this->createMock(UriInterface::class);
+        $uri->method('getPath')->willReturn($path);
 
-        $request = $this->prophesize(ServerRequestInterface::class);
-        $request->getMethod()->willReturn($method);
-        $request->getUri()->willReturn($uri->reveal());
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getMethod')->willReturn($method);
+        $request->method('getUri')->willReturn($uri);
 
-        return $request->reveal();
+        return $request;
     }
 }
