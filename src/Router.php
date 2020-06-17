@@ -47,8 +47,8 @@ class Router
         }
 
         return new Handler(
-            $matched['_handler_class'],
-            $matched['_handler_method'],
+            $matched[HandlerClassLoader::HANDLER_CLASS_KEY],
+            $matched[HandlerClassLoader::HANDLER_METHOD_KEY],
             $this->extractVariables($matched)
         );
     }
