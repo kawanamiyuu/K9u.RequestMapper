@@ -13,7 +13,7 @@ abstract class AbstractMapping
      */
     private $delegate;
 
-    public function __construct(string $path, ?string $method)
+    protected function __construct(string $path, ?string $method)
     {
         $methods = $method ? [$method] : [];
 
@@ -23,8 +23,14 @@ abstract class AbstractMapping
         ]);
     }
 
+    /**
+     * @param string  $name
+     * @param mixed[] $arguments
+     *
+     * @return mixed
+     */
     public function __call(string $name, array $arguments)
     {
-        return $this->delegate->{$name}($arguments);
+        return $this->delegate->{$name}(...$arguments);
     }
 }

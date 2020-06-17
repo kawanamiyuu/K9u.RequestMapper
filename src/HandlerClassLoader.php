@@ -21,7 +21,13 @@ class HandlerClassLoader extends AnnotationClassLoader
      */
     protected $routeAnnotationClass = AbstractMapping::class;
 
-    protected function configureRoute(Route $route, ReflectionClass $class, ReflectionMethod $method, $annotation)
+    /**
+     * @param Route                   $route
+     * @param ReflectionClass<object> $class
+     * @param ReflectionMethod        $method
+     * @param object                  $annotation
+     */
+    protected function configureRoute(Route $route, ReflectionClass $class, ReflectionMethod $method, $annotation): void
     {
         assert(count($route->getMethods()) === 1);
         assert($annotation instanceof AbstractMapping);

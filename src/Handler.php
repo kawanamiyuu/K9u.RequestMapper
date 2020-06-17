@@ -17,10 +17,15 @@ final class Handler
     public $method;
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     public $variables;
 
+    /**
+     * @param string                $class
+     * @param string                $method
+     * @param array<string, string> $variables
+     */
     public function __construct(string $class, string $method, array $variables)
     {
         $this->class = $class;

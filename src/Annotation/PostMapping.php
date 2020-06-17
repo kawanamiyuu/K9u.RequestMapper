@@ -10,6 +10,9 @@ namespace K9u\Router\Annotation;
  */
 final class PostMapping extends AbstractMapping
 {
+    /**
+     * @param array<string, string> $data
+     */
     public function __construct(array $data)
     {
         parent::__construct($data['value'], 'POST');
