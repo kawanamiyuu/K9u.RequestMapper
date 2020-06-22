@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace K9u\Router;
 
+use K9u\Router\Annotation\AbstractMapping;
 use LogicException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -26,7 +27,7 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
 
         $this->directoryLoader = new AnnotationDirectoryLoader(
             new FileLocator(),
-            new HandlerClassLoader()
+            new AnnotatedHandlerClassLoader(AbstractMapping::class)
         );
     }
 

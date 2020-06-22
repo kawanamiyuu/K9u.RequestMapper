@@ -41,22 +41,10 @@ class Router
         }
 
         return new Handler(
-            $matched[HandlerClassLoader::HANDLER_CLASS_KEY],
-            $matched[HandlerClassLoader::HANDLER_METHOD_KEY],
-            $this->extractPathVariables($matched)
+            AnnotatedHandlerClassLoader::extractHandlerClass($matched),
+            AnnotatedHandlerClassLoader::extractHandlerMethod($matched),
+            AnnotatedHandlerClassLoader::extractPathVariables($matched)
         );
-    }
-
-    /**
-     * @param array<string, string> $matched
-     *
-     * @return array<string, string>
-     */
-    private function extractPathVariables(array $matched): array
-    {
-        return array_filter($matched, function ($key) {
-            return substr($key, 0, 1) !== '_';
-        }, ARRAY_FILTER_USE_KEY);
     }
 
     private function getRouteCollection(): RouteCollection
