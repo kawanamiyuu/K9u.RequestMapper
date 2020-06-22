@@ -43,7 +43,7 @@ class Router
         return new Handler(
             $matched[HandlerClassLoader::HANDLER_CLASS_KEY],
             $matched[HandlerClassLoader::HANDLER_METHOD_KEY],
-            $this->extractVariables($matched)
+            $this->extractPathVariables($matched)
         );
     }
 
@@ -52,7 +52,7 @@ class Router
      *
      * @return array<string, string>
      */
-    private function extractVariables(array $matched): array
+    private function extractPathVariables(array $matched): array
     {
         return array_filter($matched, function ($key) {
             return substr($key, 0, 1) !== '_';

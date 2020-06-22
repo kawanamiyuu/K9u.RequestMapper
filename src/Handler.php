@@ -13,17 +13,17 @@ final class Handler
     /**
      * @var array<string, string>
      */
-    public array $variables;
+    public array $pathVariables;
 
     /**
      * @param string                $class
      * @param string                $method
-     * @param array<string, string> $variables
+     * @param array<string, string> $pathVariables
      */
-    public function __construct(string $class, string $method, array $variables)
+    public function __construct(string $class, string $method, array $pathVariables)
     {
         $this->class = $class;
         $this->method = $method;
-        $this->variables = $variables;
+        $this->pathVariables = $pathVariables;
     }
 }

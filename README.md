@@ -32,7 +32,7 @@ $handler = $router->match($request);
 var_dump([
     'class' => $handler->class,
     'method' => $handler->method,
-    'variables' => $handler->variables,
+    'pathVariables' => $handler->pathVariables,
 ]);
 ```
 
@@ -42,7 +42,7 @@ array(3) {
   string(34) "Vendor\Package\Presentation\Blog\BlogController"
   ["method"]=>
   string(3) "show"
-  ["variables"]=>
+  ["pathVariables"]=>
   array(1) {
     ["id"]=>
     string(1) "1"
