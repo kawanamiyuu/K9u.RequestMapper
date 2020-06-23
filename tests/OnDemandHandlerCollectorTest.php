@@ -9,13 +9,13 @@ use K9u\Router\Blog\BlogController;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 
-class OnDemandRouteCollectorTest extends TestCase
+class OnDemandHandlerCollectorTest extends TestCase
 {
     public function testInvalidBaseDir()
     {
         $this->expectException(LogicException::class);
 
-        new OnDemandRouteCollector('__invalid__');
+        new OnDemandHandlerCollector('__invalid__');
     }
 
     /**
@@ -23,9 +23,9 @@ class OnDemandRouteCollectorTest extends TestCase
      *
      * @param array $expects expects
      */
-    public function testCollectRoutes(array $expects)
+    public function testCollect(array $expects)
     {
-        $collector = new OnDemandRouteCollector(__DIR__ . '/Fixtures');
+        $collector = new OnDemandHandlerCollector(__DIR__ . '/Fixtures');
         $collection = $collector();
 
         $this->assertSame(12, $collection->count());

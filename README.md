@@ -26,7 +26,7 @@ use K9u\Router;
 
 $request = ServerRequestFactory::createServerRequest('GET', '/blogs/1', $_SERVER);
 
-$router = new Router(new OnDemandRouteCollector('/path/to/src/Presentation'));
+$router = new Router(new OnDemandHandlerCollector('/path/to/src/Presentation'));
 $handler = $router->match($request);
 
 var_dump([

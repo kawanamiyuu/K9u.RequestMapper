@@ -11,26 +11,30 @@ use Symfony\Component\Routing\Exception\MethodNotAllowedException as MethodNotAl
 use Symfony\Component\Routing\Exception\ResourceNotFoundException as HandlerNotFound;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouteCollection as HandlerCollection;
 
 class Router
 {
-    private RouteCollectorInterface $collector;
+    private HandlerCollectorInterface $handlerCollector;
 
-    private RouteCollection $routeCollection;
+    private HandlerCollection $handlerCollection;
 
-    public function __construct(RouteCollectorInterface $collector)
+    public function __construct(HandlerCollectorInterface $handlerCollector)
     {
-        $this->collector = $collector;
+        $this->handlerCollector = $handlerCollector;
     }
 
     public function match(ServerRequestInterface $request): Handler
     {
+        if (! isset($this->handlerCollection)) {
+            $this->handlerCollection = ($this->handlerCollector)();
+        }
+
         $method = $request->getMethod();
         $path = $request->getUri()->getPath();
 
         $context = new RequestContext('/', $method);
-        $matcher = new UrlMatcher($this->getRouteCollection(), $context);
+        $matcher = new UrlMatcher($this->handlerCollection, $context);
 
         try {
             $matched = $matcher->match($path);
@@ -45,14 +49,5 @@ class Router
             AnnotatedHandlerClassLoader::extractHandlerMethod($matched),
             AnnotatedHandlerClassLoader::extractPathVariables($matched)
         );
-    }
-
-    private function getRouteCollection(): RouteCollection
-    {
-        if (isset($this->routeCollection)) {
-            return $this->routeCollection;
-        }
-
-        return $this->routeCollection = ($this->collector)();
     }
 }
