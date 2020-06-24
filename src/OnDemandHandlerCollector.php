@@ -9,9 +9,9 @@ use LogicException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
-use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\RouteCollection as HandlerCollection;
 
-final class OnDemandRouteCollector implements RouteCollectorInterface
+final class OnDemandHandlerCollector implements HandlerCollectorInterface
 {
     private string $baseDir;
 
@@ -31,7 +31,7 @@ final class OnDemandRouteCollector implements RouteCollectorInterface
         );
     }
 
-    public function __invoke(): RouteCollection
+    public function __invoke(): HandlerCollection
     {
         return $this->directoryLoader->load($this->baseDir);
     }

@@ -17,7 +17,7 @@ class RouterTest extends TestCase
     {
         $request = $this->createRequest('GET', '/authors/1');
 
-        $router = new Router(new OnDemandRouteCollector(__DIR__ . '/Fixtures'));
+        $router = new Router(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handler = $router->match($request);
 
         $this->assertSame(AuthorController::class, $handler->class);
@@ -31,7 +31,7 @@ class RouterTest extends TestCase
 
         $request = $this->createRequest('GET', '/users');
 
-        $router = new Router(new OnDemandRouteCollector(__DIR__ . '/Fixtures'));
+        $router = new Router(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $router->match($request);
     }
 
@@ -41,7 +41,7 @@ class RouterTest extends TestCase
 
         $request = $this->createRequest('DELETE', '/authors');
 
-        $router = new Router(new OnDemandRouteCollector(__DIR__ . '/Fixtures'));
+        $router = new Router(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $router->match($request);
     }
 
