@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace K9u\Router;
+namespace K9u\RequestMapper;
 
-use K9u\Router\Exception\HandlerNotFoundException;
-use K9u\Router\Exception\MethodNotAllowedException;
+use K9u\RequestMapper\Exception\HandlerNotFoundException;
+use K9u\RequestMapper\Exception\MethodNotAllowedException;
 use Psr\Http\Message\ServerRequestInterface;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException as MethodNotAllowed;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException as HandlerNotFound;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection as HandlerCollection;
 
-class Router
+class HandlerResolver implements HandlerResolverInterface
 {
     private HandlerCollectorInterface $handlerCollector;
 
@@ -24,7 +24,7 @@ class Router
         $this->handlerCollector = $handlerCollector;
     }
 
-    public function match(ServerRequestInterface $request): Handler
+    public function __invoke(ServerRequestInterface $request): Handler
     {
         if (! isset($this->handlerCollection)) {
             $this->handlerCollection = ($this->handlerCollector)();

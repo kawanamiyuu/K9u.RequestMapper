@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace K9u\Router;
+namespace K9u\RequestMapper;
 
 use Symfony\Component\Routing\RouteCollection as HandlerCollection;
 
