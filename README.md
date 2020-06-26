@@ -1,12 +1,13 @@
-# K9u.Router
+# K9u.HandlerResolver
 
 [![badge](https://github.com/kawanamiyuu/K9u.Router/workflows/CI/badge.svg)](https://github.com/kawanamiyuu/K9u.Router/actions?query=workflow%3ACI)
 
-Annotatable Router library for PHP.
+Annotatable Request Mapper library for PHP.
 
 ## Usage
 
 ```php
+use K9u\RequestMapper\Annotation\GetMapping;
 use Vendor\Package\Presentation\Blog;
 
 class BlogController
@@ -22,12 +23,12 @@ class BlogController
 ```
 
 ```php
-use K9u\Router;
+use K9u\RequestMapper;
 
-$request = ServerRequestFactory::createServerRequest('GET', '/blogs/1', $_SERVER);
+$request = ServerRequestFactory::createServerRequest('GET', 'http://example.com/blogs/1', $_SERVER);
 
-$router = new Router(new OnDemandHandlerCollector('/path/to/src/Presentation'));
-$handler = $router->match($request);
+$handlerResolver = new HandlerResolver(new OnDemandHandlerCollector('/path/to/src/Presentation'));
+$handler = $handlerResolver($request);
 
 var_dump([
     'class' => $handler->class,

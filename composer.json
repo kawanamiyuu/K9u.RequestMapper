@@ -1,7 +1,7 @@
 {
-    "name": "k9u/router",
+    "name": "k9u/request-mapper",
     "type": "library",
-    "description": "Annotatable Router library for PHP",
+    "description": "Annotatable Request Mapper library for PHP",
     "keywords": ["router", "routing", "annotation"],
     "license": "MIT",
     "authors": [
@@ -26,12 +26,12 @@
     },
     "autoload": {
         "psr-4": {
-            "K9u\\Router\\": "src/"
+            "K9u\\RequestMapper\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "K9u\\Router\\": ["tests/","tests/Fixtures/"]
+            "K9u\\RequestMapper\\": ["tests/","tests/Fixtures/"]
         }
     },
     "scripts": {

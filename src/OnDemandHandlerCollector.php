@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace K9u\Router;
+namespace K9u\RequestMapper;
 
-use K9u\Router\Annotation\AbstractMapping;
+use K9u\RequestMapper\Annotation\AbstractMapping;
 use LogicException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Loader\LoaderInterface;

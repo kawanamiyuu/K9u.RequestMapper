@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace K9u\Router;
+namespace K9u\RequestMapper;
 
-use K9u\Router\Author\AuthorController;
-use K9u\Router\Blog\BlogController;
+use K9u\RequestMapper\Author\AuthorController;
+use K9u\RequestMapper\Blog\BlogController;
 use LogicException;
 use PHPUnit\Framework\TestCase;
 

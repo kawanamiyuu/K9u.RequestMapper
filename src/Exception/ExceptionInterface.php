@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace K9u\Router\Exception;
+namespace K9u\RequestMapper\Exception;
 
 use Throwable;
 
