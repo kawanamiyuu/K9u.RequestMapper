@@ -1,6 +1,6 @@
-# K9u.HandlerResolver
+# K9u.RequestMapper
 
-[![badge](https://github.com/kawanamiyuu/K9u.Router/workflows/CI/badge.svg)](https://github.com/kawanamiyuu/K9u.Router/actions?query=workflow%3ACI)
+[![badge](https://github.com/kawanamiyuu/K9u.RequestMapper/workflows/CI/badge.svg)](https://github.com/kawanamiyuu/K9u.RequestMapper/actions?query=workflow%3ACI)
 
 Annotatable Request Mapper library for PHP.
 
