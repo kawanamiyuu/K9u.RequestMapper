@@ -14,7 +14,7 @@ interface HandlerMethodArgumentsResolverInterface
      * @param ServerRequestInterface $request
      * @param PathVariables          $pathVariables
      *
-     * @return array<mixed>
+     * @return array<mixed> arguments given to handler method
      */
     public function __invoke(
         ReflectionMethod $method,
