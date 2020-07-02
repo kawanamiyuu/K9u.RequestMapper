@@ -10,10 +10,7 @@ final class Handler
 
     public string $method;
 
-    /**
-     * @var array<string, string>
-     */
-    public array $pathVariables;
+    public PathVariables $pathVariables;
 
     /**
      * @param string                $class
@@ -24,6 +21,6 @@ final class Handler
     {
         $this->class = $class;
         $this->method = $method;
-        $this->pathVariables = $pathVariables;
+        $this->pathVariables = new PathVariables($pathVariables);
     }
 }

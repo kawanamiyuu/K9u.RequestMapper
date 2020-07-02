@@ -21,13 +21,15 @@ class BlogController
      */
     public function index()
     {
+        return "BlogController::index()";
     }
 
     /**
      * @GetMapping("/{id}")
      */
-    public function get()
+    public function get($id)
     {
+        return "BlogController::get($id)";
     }
 
     /**
@@ -35,26 +37,30 @@ class BlogController
      */
     public function post()
     {
+        return "BlogController::post()";
     }
 
     /**
      * @PutMapping("/{id}")
      */
-    public function put()
+    public function put($id)
     {
+        return "BlogController::put($id)";
     }
 
     /**
      * @PatchMapping("/{id}")
      */
-    public function patch()
+    public function patch($id)
     {
+        return "BlogController::patch($id)";
     }
 
     /**
      * @DeleteMapping("/{id}")
      */
-    public function delete()
+    public function delete($id)
     {
+        return "BlogController::delete($id)";
     }
 }
