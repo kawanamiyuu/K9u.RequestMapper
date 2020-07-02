@@ -14,8 +14,8 @@ class HandlerInvokerTest extends TestCase
     public function testInvoke()
     {
         $invoker = new HandlerInvoker(
-            self::getHandlerClassFactory(),
-            self::getHandlerMethodArgumentsResolver()
+            self::createHandlerClassFactory(),
+            self::createHandlerMethodArgumentsResolver()
         );
 
         $result = $invoker(
@@ -26,7 +26,7 @@ class HandlerInvokerTest extends TestCase
         $this->assertSame("AuthorController::get(1)", $result);
     }
 
-    private static function getHandlerClassFactory(): HandlerClassFactoryInterface
+    private static function createHandlerClassFactory(): HandlerClassFactoryInterface
     {
         return new class implements HandlerClassFactoryInterface
         {
@@ -37,7 +37,7 @@ class HandlerInvokerTest extends TestCase
         };
     }
 
-    private static function getHandlerMethodArgumentsResolver(): HandlerMethodArgumentsResolverInterface
+    private static function createHandlerMethodArgumentsResolver(): HandlerMethodArgumentsResolverInterface
     {
         return new class implements HandlerMethodArgumentsResolverInterface
         {
