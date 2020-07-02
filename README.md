@@ -8,7 +8,7 @@ Annotatable Request Mapper library for PHP.
 
 ```php
 use K9u\RequestMapper\Annotation\GetMapping;
-use Vendor\Package\Presentation\Blog;
+use My\App\Presentation\Blog;
 
 class BlogController
 {
@@ -17,7 +17,14 @@ class BlogController
      */
     public function show($id)
     {
-        // snip
+        // snip(find blog by $id)
+        $blog = [
+            'id' => $id,
+            'title' => 'Hello world!',
+            ...
+        ];
+
+        return $blog;
     }
 }
 ```
@@ -27,26 +34,27 @@ use K9u\RequestMapper;
 
 $request = ServerRequestFactory::createServerRequest('GET', 'http://example.com/blogs/1', $_SERVER);
 
-$handlerResolver = new HandlerResolver(new OnDemandHandlerCollector('/path/to/src/Presentation'));
+$handlerCollector = new OnDemandHandlerCollector('/path/to/src/Presentation')
+$handlerResolver = new HandlerResolver($handlerCollector);
 $handler = $handlerResolver($request);
 
-var_dump([
-    'class' => $handler->class,
-    'method' => $handler->method,
-    'pathVariables' => $handler->pathVariables,
-]);
-```
+// $handler->class         = 'My\App\Presentation\Blog\BlogController'
+// $handler->method        = 'show'
+// $handler->pathVariables = ['id' => '1']
 
-```
-array(3) {
-  ["class"]=>
-  string(34) "Vendor\Package\Presentation\Blog\BlogController"
-  ["method"]=>
-  string(3) "show"
-  ["pathVariables"]=>
-  array(1) {
-    ["id"]=>
-    string(1) "1"
-  }
-}
+$handlerClassFactory = ...;
+/* @var HandlerClassFactoryInterface $handlerClassFactory */
+
+$handlerMethodArgumentsResolver = ...;
+/* @var HandlerMethodArgumentsResolverInterface $handlerMethodArgumentsResolver */
+
+$handlerInvoker = new HandlerInvoker($handlerClassFactory, $handlerMethodArgumentsResolver);
+$result = $handlerInvoker($handler, $request);
+
+var_export($result);
+// array (
+//   'id' => 1,
+//   'title' => 'Hello world!',
+//   ...
+// )
 ```

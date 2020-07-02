@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace K9u\RequestMapper;
 
+use ArrayIterator;
 use K9u\RequestMapper\Author\AuthorController;
 use K9u\RequestMapper\Exception\HandlerNotFoundException;
 use K9u\RequestMapper\Exception\MethodNotAllowedException;
@@ -22,7 +23,7 @@ class HandlerResolverTest extends TestCase
 
         $this->assertSame(AuthorController::class, $handler->class);
         $this->assertSame('get', $handler->method);
-        $this->assertSame(['id' => '1'], $handler->pathVariables);
+        $this->assertSame(['id' => '1'], $handler->pathVariables->getIterator()->getArrayCopy());
     }
 
     public function testHandlerNotFound()

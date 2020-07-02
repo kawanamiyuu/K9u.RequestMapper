@@ -17,13 +17,15 @@ class AuthorController
      */
     public function index()
     {
+        return "AuthorController::index()";
     }
 
     /**
      * @GetMapping("/authors/{id}")
      */
-    public function get()
+    public function get($id)
     {
+        return "AuthorController::get($id)";
     }
 
     /**
@@ -31,26 +33,30 @@ class AuthorController
      */
     public function post()
     {
+        return "AuthorController::post()";
     }
 
     /**
      * @PutMapping("/authors/{id}")
      */
-    public function put()
+    public function put($id)
     {
+        return "AuthorController::put($id)";
     }
 
     /**
      * @PatchMapping("/authors/{id}")
      */
-    public function patch()
+    public function patch($id)
     {
+        return "AuthorController::patch($id)";
     }
 
     /**
      * @DeleteMapping("/authors/{id}")
      */
-    public function delete()
+    public function delete($id)
     {
+        return "AuthorController::delete($id)";
     }
 }
