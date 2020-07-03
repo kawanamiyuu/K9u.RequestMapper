@@ -38,9 +38,9 @@ $handlerCollector = new OnDemandHandlerCollector('/path/to/src/Presentation')
 $handlerResolver = new HandlerResolver($handlerCollector);
 $handler = $handlerResolver($request);
 
-// $handler->class         = 'My\App\Presentation\Blog\BlogController'
-// $handler->method        = 'show'
-// $handler->pathVariables = ['id' => '1']
+// $handler->class      = 'My\App\Presentation\Blog\BlogController'
+// $handler->method     = 'show'
+// $handler->pathParams = ['id' => '1']
 
 $handlerClassFactory = ...;
 /* @var HandlerClassFactoryInterface $handlerClassFactory */

@@ -47,7 +47,7 @@ class HandlerResolver implements HandlerResolverInterface
         return new Handler(
             AnnotatedHandlerClassLoader::extractHandlerClass($matched),
             AnnotatedHandlerClassLoader::extractHandlerMethod($matched),
-            AnnotatedHandlerClassLoader::extractPathVariables($matched)
+            AnnotatedHandlerClassLoader::extractPathParams($matched)
         );
     }
 }

@@ -14,19 +14,19 @@ use Traversable;
  * @implements \ArrayAccess<string, string>
  * @implements \IteratorAggregate<string, string>
  */
-class PathVariables implements ArrayAccess, IteratorAggregate
+class PathParams implements ArrayAccess, IteratorAggregate
 {
     /**
      * @var array<string, string>
      */
-    private array $variables;
+    private array $params;
 
     /**
-     * @param array<string, string> $variables
+     * @param array<string, string> $params
      */
-    public function __construct(array $variables)
+    public function __construct(array $params)
     {
-        $this->variables = $variables;
+        $this->params = $params;
     }
 
     /**
@@ -36,7 +36,7 @@ class PathVariables implements ArrayAccess, IteratorAggregate
      */
     public function offsetExists($offset): bool
     {
-        return isset($this->variables[$offset]);
+        return isset($this->params[$offset]);
     }
 
     /**
@@ -46,7 +46,7 @@ class PathVariables implements ArrayAccess, IteratorAggregate
      */
     public function offsetGet($offset): ?string
     {
-        return $this->variables[$offset];
+        return $this->params[$offset];
     }
 
     /**
@@ -57,7 +57,7 @@ class PathVariables implements ArrayAccess, IteratorAggregate
     {
         unset($offset, $value); // unused
 
-        throw new BadMethodCallException('PathVariables is immutable.');
+        throw new BadMethodCallException('PathParams is immutable.');
     }
 
     /**
@@ -67,11 +67,11 @@ class PathVariables implements ArrayAccess, IteratorAggregate
     {
         unset($offset); // unused
 
-        throw new BadMethodCallException('PathVariables is immutable.');
+        throw new BadMethodCallException('PathParams is immutable.');
     }
 
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->variables);
+        return new ArrayIterator($this->params);
     }
 }

@@ -10,17 +10,17 @@ final class Handler
 
     public string $method;
 
-    public PathVariables $pathVariables;
+    public PathParams $pathParams;
 
     /**
      * @param string                $class
      * @param string                $method
-     * @param array<string, string> $pathVariables
+     * @param array<string, string> $pathParams
      */
-    public function __construct(string $class, string $method, array $pathVariables)
+    public function __construct(string $class, string $method, array $pathParams)
     {
         $this->class = $class;
         $this->method = $method;
-        $this->pathVariables = new PathVariables($pathVariables);
+        $this->pathParams = new PathParams($pathParams);
     }
 }

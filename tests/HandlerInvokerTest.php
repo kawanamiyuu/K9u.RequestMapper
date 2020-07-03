@@ -44,11 +44,11 @@ class HandlerInvokerTest extends TestCase
             public function __invoke(
                 ReflectionMethod $method,
                 ServerRequestInterface $request,
-                PathVariables $pathVariables
+                PathParams $pathParams
             ): array {
                 $args = [];
                 foreach ($method->getParameters() as $param) {
-                    $args[] = $pathVariables[$param->getName()];
+                    $args[] = $pathParams[$param->getName()];
                 }
                 return $args;
             }

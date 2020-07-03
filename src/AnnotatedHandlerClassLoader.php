@@ -66,7 +66,7 @@ class AnnotatedHandlerClassLoader extends AnnotationClassLoader
      *
      * @return array<string, string>
      */
-    public static function extractPathVariables(array $params): array
+    public static function extractPathParams(array $params): array
     {
         return array_filter($params, function ($key) {
             return substr($key, 0, 1) !== '_';
