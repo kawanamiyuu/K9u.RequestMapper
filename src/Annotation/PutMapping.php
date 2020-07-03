@@ -6,7 +6,7 @@ namespace K9u\RequestMapper\Annotation;
 
 /**
  * @Annotation
- * @Target({"CLASS", "METHOD"})
+ * @Target("METHOD")
  */
 final class PutMapping extends AbstractMapping
 {
