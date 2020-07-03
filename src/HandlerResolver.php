@@ -44,10 +44,14 @@ class HandlerResolver implements HandlerResolverInterface
             throw new MethodNotAllowedException($method, $path, $e);
         }
 
+        $pathParams = array_filter($matched, function ($key) {
+            return substr($key, 0, 1) !== '_';
+        }, ARRAY_FILTER_USE_KEY);
+
         return new Handler(
-            AnnotatedHandlerClassLoader::extractHandlerClass($matched),
-            AnnotatedHandlerClassLoader::extractHandlerMethod($matched),
-            AnnotatedHandlerClassLoader::extractPathParams($matched)
+            $matched['_handler_class'],
+            $matched['_handler_method'],
+            $pathParams
         );
     }
 }
