@@ -23,9 +23,6 @@ class HandlerInvoker implements HandlerInvokerInterface
 
     public function __invoke(Handler $handler, ServerRequestInterface $request)
     {
-        assert(class_exists($handler->class));
-        assert(method_exists($handler->class, $handler->method));
-
         $obj = ($this->classFactory)($handler->class);
         $method = new ReflectionMethod($handler->class, $handler->method);
         $args = ($this->methodArgsResolver)($method, $request, $handler->pathParams);
