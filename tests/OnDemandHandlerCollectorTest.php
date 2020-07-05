@@ -6,18 +6,10 @@ namespace K9u\RequestMapper;
 
 use K9u\RequestMapper\Author\AuthorController;
 use K9u\RequestMapper\Blog\BlogController;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 
 class OnDemandHandlerCollectorTest extends TestCase
 {
-    public function testInvalidBaseDir()
-    {
-        $this->expectException(LogicException::class);
-
-        new OnDemandHandlerCollector('__invalid__');
-    }
-
     /**
      * @dataProvider expectsProvider
      *

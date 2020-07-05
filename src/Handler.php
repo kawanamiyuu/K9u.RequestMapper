@@ -19,6 +19,9 @@ final class Handler
      */
     public function __construct(string $class, string $method, array $pathParams)
     {
+        assert(class_exists($class));
+        assert(method_exists($class, $method));
+
         $this->class = $class;
         $this->method = $method;
         $this->pathParams = new PathParams($pathParams);
