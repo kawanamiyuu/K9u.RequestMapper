@@ -5,25 +5,42 @@ declare(strict_types=1);
 namespace K9u\RequestMapper;
 
 use K9u\RequestMapper\Author\AuthorController;
+use K9u\RequestMapper\Author\WeavedAuthorController;
+use K9u\RequestMapper\Blog\BlogController;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use ReflectionMethod;
 
 class HandlerInvokerTest extends TestCase
 {
-    public function testInvoke()
+    private HandlerInvokerInterface $invoker;
+
+    protected function setUp(): void
     {
-        $invoker = new HandlerInvoker(
+        $this->invoker = new HandlerInvoker(
             self::createHandlerClassFactory(),
             self::createHandlerMethodArgumentsResolver()
         );
+    }
 
-        $result = $invoker(
+    public function testInvokeWeaved()
+    {
+        $result = ($this->invoker)(
             new Handler(AuthorController::class, 'get', ['id' => '1']),
             $this->createMock(ServerRequestInterface::class)
         );
 
-        $this->assertSame("AuthorController::get(1)", $result);
+        $this->assertSame("weaved::AuthorController::get(1)", $result);
+    }
+
+    public function testInvoke()
+    {
+        $result = ($this->invoker)(
+            new Handler(BlogController::class, 'post', []),
+            $this->createMock(ServerRequestInterface::class)
+        );
+
+        $this->assertSame("BlogController::post()", $result);
     }
 
     private static function createHandlerClassFactory(): HandlerClassFactoryInterface
@@ -32,6 +49,10 @@ class HandlerInvokerTest extends TestCase
         {
             public function __invoke(string $class): object
             {
+                if (is_a($class, AuthorController::class, true)) {
+                    return new WeavedAuthorController();
+                }
+
                 return new $class();
             }
         };
