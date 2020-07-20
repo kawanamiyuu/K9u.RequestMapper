@@ -66,12 +66,12 @@ class HandlerInvokerTest extends TestCase
                 ReflectionMethod $method,
                 ServerRequestInterface $request,
                 PathParams $pathParams
-            ): array {
+            ): NamedArguments {
                 $args = [];
                 foreach ($method->getParameters() as $param) {
-                    $args[] = $pathParams[$param->getName()];
+                    $args[$param->getName()] = $pathParams[$param->getName()];
                 }
-                return $args;
+                return new NamedArguments($args);
             }
         };
     }

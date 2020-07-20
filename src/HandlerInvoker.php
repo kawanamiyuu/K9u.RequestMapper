@@ -27,6 +27,6 @@ class HandlerInvoker implements HandlerInvokerInterface
         $method = new ReflectionMethod($obj, $handler->method);
         $args = ($this->methodArgsResolver)($method, $request, $handler->pathParams);
 
-        return $method->invokeArgs($obj, $args);
+        return $method->invokeArgs($obj, $args->toArray());
     }
 }
