@@ -6,11 +6,11 @@ namespace K9u\RequestMapper;
 
 final class Handler
 {
-    public string $class;
+    private string $class;
 
-    public string $method;
+    private string $method;
 
-    public PathParams $pathParams;
+    private PathParams $pathParams;
 
     /**
      * @param string                $class
@@ -25,5 +25,20 @@ final class Handler
         $this->class = $class;
         $this->method = $method;
         $this->pathParams = new PathParams($pathParams);
+    }
+
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    public function getPathParams(): PathParams
+    {
+        return $this->pathParams;
     }
 }

@@ -23,10 +23,10 @@ class HandlerInvoker implements HandlerInvokerInterface
 
     public function __invoke(Handler $handler, ServerRequestInterface $request)
     {
-        $obj = ($this->classFactory)($handler->class);
-        $method = new ReflectionMethod($obj, $handler->method);
-        $args = ($this->methodArgsResolver)($method, $request, $handler->pathParams);
+        $obj = ($this->classFactory)($handler->getClass());
+        $method = new ReflectionMethod($obj, $handler->getMethod());
+        $args = ($this->methodArgsResolver)($method, $request, $handler->getPathParams());
 
-        return $method->invokeArgs($obj, $args);
+        return $method->invokeArgs($obj, $args->toArray());
     }
 }

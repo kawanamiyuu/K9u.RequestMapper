@@ -20,9 +20,9 @@ class HandlerResolverTest extends TestCase
         $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handler = $handlerResolver($request);
 
-        $this->assertSame(BlogController::class, $handler->class);
-        $this->assertSame('get', $handler->method);
-        $this->assertSame(['id' => '1'], $handler->pathParams->getIterator()->getArrayCopy());
+        $this->assertSame(BlogController::class, $handler->getClass());
+        $this->assertSame('get', $handler->getMethod());
+        $this->assertSame(['id' => '1'], $handler->getPathParams()->toArray());
     }
 
     public function testHandlerNotFound()

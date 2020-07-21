@@ -5,31 +5,30 @@ declare(strict_types=1);
 namespace K9u\RequestMapper;
 
 use ArrayAccess;
-use ArrayIterator;
 use BadMethodCallException;
 use LogicException;
 
 /**
- * @implements \ArrayAccess<string, string>
+ * @implements \ArrayAccess<string, mixed>
  */
-class PathParams implements ArrayAccess
+class NamedArguments implements ArrayAccess
 {
     /**
-     * @var array<string, string>
+     * @var array<string, mixed>
      */
-    private array $params = [];
+    private array $args = [];
 
     /**
-     * @param array<string, string> $params
+     * @param array<string, mixed> $args
      */
-    public function __construct(array $params)
+    public function __construct(array $args)
     {
-        foreach ($params as $offset => $value) {
+        foreach ($args as $offset => $value) {
             if (! (is_string($offset) && strlen($offset) > 0)) {
-                throw new LogicException('param name must be string literal.');
+                throw new LogicException('argument name must be string literal.');
             }
 
-            $this->params[$offset] = $value;
+            $this->args[$offset] = $value;
         }
     }
 
@@ -40,22 +39,22 @@ class PathParams implements ArrayAccess
      */
     public function offsetExists($offset): bool
     {
-        return isset($this->params[$offset]);
+        return isset($this->args[$offset]);
     }
 
     /**
      * @param string $offset
      *
-     * @return string|null
+     * @return mixed
      */
-    public function offsetGet($offset): ?string
+    public function offsetGet($offset)
     {
-        return $this->params[$offset];
+        return $this->args[$offset];
     }
 
     /**
      * @param string $offset
-     * @param string $value
+     * @param mixed  $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -75,10 +74,10 @@ class PathParams implements ArrayAccess
     }
 
     /**
-     * @return array<string, string>
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
-        return $this->params;
+        return $this->args;
     }
 }
