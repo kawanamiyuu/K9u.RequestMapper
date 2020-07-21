@@ -22,7 +22,7 @@ class HandlerResolverTest extends TestCase
 
         $this->assertSame(BlogController::class, $handler->class);
         $this->assertSame('get', $handler->method);
-        $this->assertSame(['id' => '1'], $handler->pathParams->getIterator()->getArrayCopy());
+        $this->assertSame(['id' => '1'], $handler->pathParams->toArray());
     }
 
     public function testHandlerNotFound()

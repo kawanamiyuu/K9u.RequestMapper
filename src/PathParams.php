@@ -7,26 +7,30 @@ namespace K9u\RequestMapper;
 use ArrayAccess;
 use ArrayIterator;
 use BadMethodCallException;
-use IteratorAggregate;
-use Traversable;
+use LogicException;
 
 /**
  * @implements \ArrayAccess<string, string>
- * @implements \IteratorAggregate<string, string>
  */
-class PathParams implements ArrayAccess, IteratorAggregate
+class PathParams implements ArrayAccess
 {
     /**
      * @var array<string, string>
      */
-    private array $params;
+    private array $params = [];
 
     /**
      * @param array<string, string> $params
      */
     public function __construct(array $params)
     {
-        $this->params = $params;
+        foreach ($params as $offset => $value) {
+            if (! (is_string($offset) && strlen($offset) > 0)) {
+                throw new LogicException('param name must be string literal.');
+            }
+
+            $this->params[$offset] = $value;
+        }
     }
 
     /**
@@ -57,7 +61,7 @@ class PathParams implements ArrayAccess, IteratorAggregate
     {
         unset($offset, $value); // unused
 
-        throw new BadMethodCallException('PathParams is immutable.');
+        throw new BadMethodCallException('unsupported');
     }
 
     /**
@@ -67,11 +71,14 @@ class PathParams implements ArrayAccess, IteratorAggregate
     {
         unset($offset); // unused
 
-        throw new BadMethodCallException('PathParams is immutable.');
+        throw new BadMethodCallException('unsupported');
     }
 
-    public function getIterator(): Traversable
+    /**
+     * @return array<string, string>
+     */
+    public function toArray(): array
     {
-        return new ArrayIterator($this->params);
+        return $this->params;
     }
 }
