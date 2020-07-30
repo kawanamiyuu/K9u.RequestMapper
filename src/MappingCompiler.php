@@ -25,7 +25,7 @@ class MappingCompiler
             throw new InvalidArgumentException('specify root directory that handlers are located.');
         }
 
-        $dumper = new CompiledUrlMatcherDumper((new OnDemandHandlerCollector($handlerDir))());
+        $dumper = new CompiledUrlMatcherDumper((new HandlerCollector($handlerDir))());
         file_put_contents($this->cacheDir . '/' . self::MAPPING, $dumper->dump(), LOCK_EX);
     }
 }

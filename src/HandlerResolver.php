@@ -29,7 +29,7 @@ class HandlerResolver implements HandlerResolverInterface
     public function __invoke(ServerRequestInterface $request): Handler
     {
         if (! isset($this->handlerCollection)) {
-            $this->handlerCollection = (new OnDemandHandlerCollector($this->handlerDir))();
+            $this->handlerCollection = (new HandlerCollector($this->handlerDir))();
         }
 
         $matcher = new UrlMatcher(
