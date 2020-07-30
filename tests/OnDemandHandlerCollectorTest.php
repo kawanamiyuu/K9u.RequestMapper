@@ -17,7 +17,7 @@ class OnDemandHandlerCollectorTest extends TestCase
      */
     public function testCollect(array $expects)
     {
-        $collector = new OnDemandHandlerCollector(__DIR__ . '/Fixtures');
+        $collector = new OnDemandHandlerCollector(__DIR__ . '/fixtures/handlers');
         $collection = $collector();
 
         $this->assertSame(12, $collection->count());

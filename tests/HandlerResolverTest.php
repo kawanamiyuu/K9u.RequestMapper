@@ -13,11 +13,22 @@ use Psr\Http\Message\UriInterface;
 
 class HandlerResolverTest extends TestCase
 {
-    public function testResolve()
+    private const FIXTURE_CACHE_DIR = __DIR__ . '/fixtures/cache';
+    private const FIXTURE_HANDLER_DIR = __DIR__ . '/fixtures/handlers';
+
+    public function handlerResolverProvider(): iterable
+    {
+        yield [new HandlerResolver(self::FIXTURE_HANDLER_DIR)];
+        yield [new CachedHandlerResolver(self::FIXTURE_CACHE_DIR)];
+    }
+
+    /**
+     * @dataProvider handlerResolverProvider
+     */
+    public function testResolve(HandlerResolverInterface $handlerResolver)
     {
         $request = $this->createRequest('GET', '/blogs/1');
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handler = $handlerResolver($request);
 
         $this->assertSame(BlogController::class, $handler->getClass());
@@ -25,23 +36,27 @@ class HandlerResolverTest extends TestCase
         $this->assertSame(['id' => '1'], $handler->getPathParams()->toArray());
     }
 
-    public function testHandlerNotFound()
+    /**
+     * @dataProvider handlerResolverProvider
+     */
+    public function testHandlerNotFound(HandlerResolverInterface $handlerResolver)
     {
         $this->expectException(HandlerNotFoundException::class);
 
         $request = $this->createRequest('GET', '/users');
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handlerResolver($request);
     }
 
-    public function testMethodNotAllowed()
+    /**
+     * @dataProvider handlerResolverProvider
+     */
+    public function testMethodNotAllowed(HandlerResolverInterface $handlerResolver)
     {
         $this->expectException(MethodNotAllowedException::class);
 
         $request = $this->createRequest('DELETE', '/blogs');
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handlerResolver($request);
     }
 
