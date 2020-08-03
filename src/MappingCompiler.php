@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 
 class MappingCompiler
 {
+    use HandlerResolverTrait;
+
     public const MAPPING = 'mapping.php';
 
     private string $cacheDir;
@@ -25,7 +27,7 @@ class MappingCompiler
             throw new InvalidArgumentException('specify root directory that handlers are located.');
         }
 
-        $dumper = new CompiledUrlMatcherDumper((new HandlerCollector($handlerDir))());
+        $dumper = new CompiledUrlMatcherDumper($this->collect($handlerDir));
         file_put_contents($this->cacheDir . '/' . self::MAPPING, $dumper->dump(), LOCK_EX);
     }
 }
