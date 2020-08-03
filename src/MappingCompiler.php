@@ -13,12 +13,12 @@ class MappingCompiler
 
     public const MAPPING = 'mapping.php';
 
-    private string $cacheDir;
+    private string $cacheFile;
 
     public function __construct(string $cacheDir)
     {
         ! is_dir($cacheDir) && mkdir($cacheDir, 0777, true);
-        $this->cacheDir = rtrim($cacheDir, '/');
+        $this->cacheFile = $cacheDir . '/' . self::MAPPING;
     }
 
     public function __invoke(string $handlerDir): void
@@ -28,6 +28,6 @@ class MappingCompiler
         }
 
         $dumper = new CompiledUrlMatcherDumper($this->collect($handlerDir));
-        file_put_contents($this->cacheDir . '/' . self::MAPPING, $dumper->dump(), LOCK_EX);
+        file_put_contents($this->cacheFile, $dumper->dump(), LOCK_EX);
     }
 }
