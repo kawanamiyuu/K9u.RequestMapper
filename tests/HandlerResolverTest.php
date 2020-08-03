@@ -13,36 +13,87 @@ use Psr\Http\Message\UriInterface;
 
 class HandlerResolverTest extends TestCase
 {
-    public function testResolve()
-    {
-        $request = $this->createRequest('GET', '/blogs/1');
+    private const FIXTURE_CACHE_DIR = __DIR__ . '/fixtures/cache';
+    private const FIXTURE_HANDLER_DIR = __DIR__ . '/fixtures/handlers';
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
+    /**
+     * @dataProvider dataProvider
+     */
+    public function testResolve(HandlerResolverInterface $handlerResolver, array $request, array $expect)
+    {
+        $request = $this->createRequest($request[0], $request[1]);
+
         $handler = $handlerResolver($request);
 
-        $this->assertSame(BlogController::class, $handler->getClass());
-        $this->assertSame('get', $handler->getMethod());
-        $this->assertSame(['id' => '1'], $handler->getPathParams()->toArray());
+        $this->assertSame($expect[0], $handler->getClass());
+        $this->assertSame($expect[1], $handler->getMethod());
+        $this->assertSame($expect[2], $handler->getPathParams()->toArray());
     }
 
-    public function testHandlerNotFound()
+    /**
+     * @dataProvider handlerResolverProvider
+     */
+    public function testHandlerNotFound(HandlerResolverInterface $handlerResolver)
     {
         $this->expectException(HandlerNotFoundException::class);
 
         $request = $this->createRequest('GET', '/users');
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handlerResolver($request);
     }
 
-    public function testMethodNotAllowed()
+    /**
+     * @dataProvider handlerResolverProvider
+     */
+    public function testMethodNotAllowed(HandlerResolverInterface $handlerResolver)
     {
         $this->expectException(MethodNotAllowedException::class);
 
         $request = $this->createRequest('DELETE', '/blogs');
 
-        $handlerResolver = new HandlerResolver(new OnDemandHandlerCollector(__DIR__ . '/Fixtures'));
         $handlerResolver($request);
+    }
+
+    public function handlerResolverProvider(): iterable
+    {
+        yield [new HandlerResolver(self::FIXTURE_HANDLER_DIR)];
+        yield [new CachedHandlerResolver(self::FIXTURE_CACHE_DIR)];
+    }
+
+    public function dataProvider(): iterable
+    {
+        $data = [
+            [
+                ['GET', '/blogs'],                   // request
+                [BlogController::class, 'index', []] // handler to be resolved
+            ],
+            [
+                ['GET', '/blogs/1'],
+                [BlogController::class, 'get', ['id' => '1']]
+            ],
+            [
+                ['POST', '/blogs'],
+                [BlogController::class, 'post', []]
+            ],
+            [
+                ['PUT', '/blogs/1'],
+                [BlogController::class, 'put', ['id' => '1']]
+            ],
+            [
+                ['PATCH', '/blogs/1'],
+                [BlogController::class, 'patch', ['id' => '1']]
+            ],
+            [
+                ['DELETE', '/blogs/1'],
+                [BlogController::class, 'delete', ['id' => '1']]
+            ]
+        ];
+
+        foreach ($this->handlerResolverProvider() as [$handlerResolver]) {
+            foreach ($data as [$request, $expect]) {
+                yield [$handlerResolver, $request, $expect];
+            }
+        }
     }
 
     private function createRequest(string $method, string $path): ServerRequestInterface

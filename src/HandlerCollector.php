@@ -15,23 +15,28 @@ use Symfony\Component\Routing\Loader\AnnotationDirectoryLoader;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection as HandlerCollection;
 
-final class OnDemandHandlerCollector implements HandlerCollectorInterface
+/**
+ * @internal
+ */
+final class HandlerCollector
 {
-    private string $baseDir;
+    private const ANNOTATION_CLASS = AbstractMapping::class;
+
+    private string $handlerDir;
 
     private LoaderInterface $loader;
 
-    public function __construct(string $baseDir)
+    public function __construct(string $handlerDir)
     {
-        assert(is_dir($baseDir));
+        assert(is_dir($handlerDir));
 
-        $this->baseDir = $baseDir;
-        $this->loader = self::createAnnotatedHandlerLoader(AbstractMapping::class);
+        $this->handlerDir = $handlerDir;
+        $this->loader = self::createAnnotatedHandlerLoader(self::ANNOTATION_CLASS);
     }
 
     public function __invoke(): HandlerCollection
     {
-        return $this->loader->load($this->baseDir);
+        return $this->loader->load($this->handlerDir);
     }
 
     /**

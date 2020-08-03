@@ -31,7 +31,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "K9u\\RequestMapper\\": ["tests/","tests/Fixtures/"]
+            "K9u\\RequestMapper\\": ["tests/","tests/fixtures/handlers"]
         }
     },
     "scripts": {

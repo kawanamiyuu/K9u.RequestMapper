@@ -32,10 +32,9 @@ class BlogController
 ```php
 use K9u\RequestMapper;
 
-$request = ServerRequestFactory::createServerRequest('GET', 'http://example.com/blogs/1', $_SERVER);
+$request = $serverRequestFactory->createServerRequest('GET', 'http://example.com/blogs/1', $_SERVER);
 
-$handlerCollector = new OnDemandHandlerCollector('/path/to/src/Presentation')
-$handlerResolver = new HandlerResolver($handlerCollector);
+$handlerResolver = new HandlerResolver('/path/to/src/Presentation');
 $handler = $handlerResolver($request);
 
 // $handler->class      = 'My\App\Presentation\Blog\BlogController'
