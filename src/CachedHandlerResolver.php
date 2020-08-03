@@ -21,8 +21,8 @@ class CachedHandlerResolver implements HandlerResolverInterface
 
     public function __construct(string $cacheDir)
     {
-        $cacheFile = rtrim($cacheDir, '/') . '/' . MappingCompiler::MAPPING;
-        if (! file_exists($cacheFile)) {
+        $cacheFile = $cacheDir . '/' . MappingCompiler::MAPPING;
+        if (! is_file($cacheFile)) {
             throw new InvalidArgumentException('cache file does not exist.');
         }
 
