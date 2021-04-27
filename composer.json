@@ -19,7 +19,7 @@
         "symfony/routing": "^5.2"
     },
     "require-dev": {
-        "phpmd/phpmd": "^2.8",
+        "phpmd/phpmd": "^2.10",
         "phpstan/phpstan": "^0.12",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.5"
